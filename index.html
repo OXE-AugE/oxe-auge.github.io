@@ -47,6 +47,18 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
+  
+  <!-- MathJax for LaTeX rendering -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
 </head>
@@ -181,26 +193,18 @@
 <section class="section is-medium" id="overview">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
-      <div class="column is-four-fifths has-text-justified is-hidden-mobile">
+      <div class="column has-text-justified is-hidden-mobile">
         <h2 class="subtitle ">
-          OXE-Aug is a large-scale robot-augmented dataset built on the Open-X Embodiment (OXE) dataset. It augments 16 popular real-world datasets into 9 different robot embodiments using a combination of simulation-based rendering and inpainting.
+          <strong>OXE-Aug</strong> is a high-quality open-source dataset that augments OXE with <strong>9× more robot embodiments across 16 datasets</strong>, covering <strong>60%</strong> of the widely used Octo pretraining mixture.</strong> In total, OXE-Aug provides over <strong>4.4 million trajectories, more than triple the size of the original OXE.</strong>
+        </h2>
+
+        <h2 class="subtitle ">
+          Moreover, we conduct systematic sim and real experiments and show that <strong>cross-embodiment learning scales positively with robot augmentation.</strong> Our result suggests that increasing the number and diversity of augmented embodiments yields greater robustness and stronger policy generalization to unseen robots.
         </h2>
         <br>
-        <h2 class="subtitle">
-          <strong>Ready to scale your dataset?</strong>
-            Follow the guide here! <!--TODO add link-->
-        </h2>
+        
       </div>
 
-      <div class="column is-four-fifths is-hidden-tablet has-text-justified-mobile">
-        <p>
-          <!--TODO: This should repeat the same content as above but for mobile. Look at the original HTML for reference.-->
-        </p>
-        <br>
-        <p>
-          <!--TODO: This should repeat the same content as above but for mobile. Look at the original HTML for reference.-->
-        </p>
-      </div>
 
 
     </div>
@@ -222,320 +226,245 @@
 <section class="section is-small" id="oxe-aug">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
-      <div class="column is-four-fifths">
+      <div class="column has-text-justified">
+        <h2 class="title is-1 has-text-centered is-size-4-mobile">The OXE-Aug Dataset</h2>
+        <br>
+        <h2 class="subtitle">
+           OXE-Aug is designed to scale the benefits of robot augmentation by applying cross-painting to a broad range of tasks, scenes, and robot embodiments. The original OXE dataset is highly biased, the top 4 robots account for over 85% of the trajectories. We select 16 datasets from OXE that are commonly used in training robot foundation models. The original demonstrations in these datasets were collected using Franka, UR5, xArm, WidowX, Google Robot, and Jaco platforms. We augment each dataset with up to 9 different robots: the 6 aforementioned robots, as well as Sawyer, Kinova Gen3, and KUKA.
 
-        <h2 class="title is-1 has-text-centered is-size-4-mobile">Scaling Data, Not Effort / Cross-Embodiment at Scale</h2>
-        <div class="content">
-          <p>
-            🤖 The robot learning world has a diversity problem. Generalist policies such as OpenVLA, Octo, and π_0 are trained on massive datasets, but they're learning from a very narrow slice of the robot world, mostly Franka, Google Robots, and WidowX grippers (TODO change robots listed?).
-          </p>
-        </div>
-
-        <div class="content">
-          <p>
-            💡 What if we could teach robots to be generalists without building thousands of different robots? We use realistic MuJoCo simulations to transplant demonstrations across robot embodiments, dramatically expanding diversity while preserving realism.
-          </p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-
-<section class="section is-small has-background-black has-text-light" id="under-the-hood">
+<section class="section is-small">
   <div class="container is-max-desktop">
-
-    <h2 class="title is-1 has-text-white  is-size-4-mobile">Under the Hood</h2>
-    <div class="content has-text-justified">
-      <p>
-         🎬 <strong>Step 1: Virtual Replay</strong> - We recreate the original scene in simulation, making sure our virtual camera matches what the real camera saw.
-      </p>
-      
-      <p>
-         🤖 <strong>Step 2: Robot Swap</strong> - We take the end-effector movements from the original demo and replay them with a completely different robot. No joint angles? No problem—we compute them from the gripper positions.
-      </p>
-      
-      <p>
-         ✨ <strong>Step 3: Seamless Integration</strong> - Using SAM and MujoCo masking and E2FGVI inpainting, we erase the old robot and drop in the new one, perfectly aligned so all the physics and contacts stay realistic.
-      </p>
-      
-      <p>
-         🚀 <strong>The Result</strong>: We've transformed N+ trajectories across M different robots! One demo becomes many, expanding your dataset's diversity.
-      </p>
+    <div class="columns is-centered">
+      <div class="column has-text-justified">
+        <h2 class="subtitle">
+          The full dataset in LeRobot format (~1TB) can be downloaded from Huggingface: <a href="https://huggingface.co/oxe-aug" target="_blank">https://huggingface.co/oxe-aug</a>. We also open-source our code for generating the dataset: <a href="https://github.com/GuanhuaJi/oxe-aug" target="_blank">https://github.com/GuanhuaJi/oxe-aug</a> which also provides an option for generating the data in RLDS format.
+        </h2>
+        <br>
+        <h2 class="subtitle">
+          Below are visualizations of some example episodes from OXE-Aug:
+        </h2>
+      </div>
     </div>
   </div>
 </section>
+
+<section class="section is-small" id="dataset">
+  <div class="container" style="max-width: 1200px;">
+    <div class="columns is-centered">
+      <div class="column is-full">
+
+        <!-- Dataset Grid -->
+        <div class="columns is-multiline">
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">Austin Buds</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/austin_buds/episode_grid.mp4" type="video/mp4">
+            </video>
+            </div>
+          
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">Austin Sailor</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/austin_sailor/episode_grid.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">Berkeley Autolab UR5</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/berkeley_autolab_ur5/episode_grid.mp4" type="video/mp4">
+            </video>
+        </div>
+
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">Bridge</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/bridge/episode_grid.mp4" type="video/mp4">
+            </video>
+              </div>
+          
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">UCSD Kitchen</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/ucsd_kitchen/episode_grid.mp4" type="video/mp4">
+            </video>
+            </div>
+          
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">Kaist Nonprehensile</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/kaist/episode_grid.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">Taco Play</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/taco_play/episode_grid.mp4" type="video/mp4">
+            </video>
+        </div>
+
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">Toto</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/toto/episode_grid.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">Jaco Play</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/jaco/episode_grid.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">UT Austin Mutex</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/utaustin_mutex/episode_grid.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">UTokyo XArm Pick and Place</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/utokyo_xarm_pick_and_place/episode_grid.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">Viola</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/viola/episode_grid.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">IAMLab CMU Pickup Insert</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/iamlab_cmu_pickup_insert/episode_grid.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">Language Table</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/language_table/episode_grid.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">NYU Franka Play</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/nyu_franka_play_dataset/episode_grid.mp4" type="video/mp4">
+            </video>
+          </div>
+          
+          <div class="column is-6">
+            <h4 class="title is-6 has-text-centered mb-2">Fractal</h4>
+            <video autoplay muted loop playsinline width="100%" height="250px" style="object-fit: cover;">
+              <source src="./static/videos/samples_grid/fractal/episode_grid.mp4" type="video/mp4">
+            </video>
+          </div>
+      
+      </div>
+    </div>
+  </div>
+
 
 <div class="has-text-centered">
   <video autoplay muted loop playsinline width="80%" style="aspect-ratio: 16 / 9;">
     <source src="./static/videos/pipeline_vid.mp4" type="video/mp4">
   </video>
 </div>
-
-
-<section class="section is-small" id="dataset">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-four-fifths is-centered">
-        <h2 class="title is-3 has-text-centered is-size-5-mobile">Augmented Datasets
-        </h2>
-        <p class="has-text-centered mb-5">
-          We augmented 16 popular real-world datasets into 9 different robot embodiments. Each dataset includes episode videos and action distribution histograms.
-        </p>
-
-        <!-- Dataset Dropdown -->
-        <div class="field">
-          <label class="label">Select a Dataset:</label>
-          <div class="control">
-            <div class="select is-fullwidth">
-              <select id="dataset-selector" onchange="showDataset()">
-                <option value="">Choose a dataset...</option>
-                <option value="austin_buds">Austin Buds</option>
-                <option value="austin_sailor">Austin Sailor</option>
-                <option value="berkeley_autolab_ur5">Berkeley Autolab UR5</option>
-                <option value="bridge">Bridge</option>
-                <option value="fractal">Fractal</option>
-                <option value="iamlab_cmu_pickup_insert">IAMLab CMU Pickup Insert</option>
-                <option value="jaco">Jaco Play</option>
-                <option value="kaist">Kaist Nonprehensile</option>
-                <option value="language_table">Language Table</option>
-                <option value="nyu_franka_play_dataset">NYU Franka Play</option>
-                <option value="taco_play">Taco Play</option>
-                <option value="toto">Toto</option>
-                <option value="ucsd_kitchen">UCSD Kitchen</option>
-                <option value="utaustin_mutex">UT Austin Mutex</option>
-                <option value="utokyo_xarm_pick_and_place">UTokyo XArm Pick and Place</option>
-                <option value="viola">Viola</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- Dataset Display Area -->
-        <div id="dataset-display" class="mt-5" style="display: none;">
-          <div class="card">
-            <div class="card-content">
-              <h4 id="dataset-title" class="title is-4 has-text-centered"></h4>
-              <div id="dataset-content" class="content">
-                <!-- Video and histogram will be loaded here -->
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <script>
-        function showDataset() {
-          const selector = document.getElementById('dataset-selector');
-          const display = document.getElementById('dataset-display');
-          const title = document.getElementById('dataset-title');
-          const content = document.getElementById('dataset-content');
-          
-          if (selector.value === '') {
-            display.style.display = 'none';
-            return;
-          }
-          
-          const datasetName = selector.options[selector.selectedIndex].text;
-
-          
-          // Dataset configurations
-          const datasets = {
-            'austin_buds': {
-              video: './static/videos/samples_grid/austin_buds/episode_grid.mp4',
-              histogram: './static/images/dataset_stats/austin_buds_dataset/all_histograms.png',
-              hasHistogram: true
-            },
-            'austin_sailor': {
-              video: './static/videos/samples_grid/austin_sailor/episode_grid.mp4',
-              histogram: './static/images/dataset_stats/austin_sailor_dataset/all_histograms.png',
-              hasHistogram: true
-            },
-            'berkeley_autolab_ur5': {
-              video: './static/videos/samples_grid/berkeley_autolab_ur5/episode_grid.mp4',
-              histogram: './static/images/dataset_stats/berkeley_autolab_ur5/all_histograms.png',
-              hasHistogram: true
-            },
-            'bridge': {
-              video: './static/videos/samples_grid/bridge/episode_grid.mp4',
-              histogram: null,
-              hasHistogram: false
-            },
-            'fractal': {
-              video: './static/videos/samples_grid/fractal/episode_grid.mp4',
-              histogram: null,
-              hasHistogram: false
-            },
-            'iamlab_cmu_pickup_insert': {
-              video: './static/videos/samples_grid/iamlab_cmu_pickup_insert/episode_grid.mp4',
-              histogram: './static/images/dataset_stats/iamlab_cmu_pickup_insert/all_histograms.png',
-              hasHistogram: true
-            },
-            'jaco': {
-              video: './static/videos/samples_grid/jaco/episode_grid.mp4',
-              histogram: './static/images/dataset_stats/jaco_play/all_histograms.png',
-              hasHistogram: true
-            },
-            'kaist': {
-              video: './static/videos/samples_grid/kaist/episode_grid.mp4',
-              histogram: './static/images/dataset_stats/kaist_nonprehensile/all_histograms.png',
-              hasHistogram: true
-            },
-            'language_table': {
-              video: './static/videos/samples_grid/language_table/episode_grid.mp4',
-              histogram: null,
-              hasHistogram: false
-            },
-            'nyu_franka_play_dataset': {
-              video: './static/videos/samples_grid/nyu_franka_play_dataset/episode_grid.mp4',
-              histogram: './static/images/dataset_stats/nyu_franka_play_dataset/all_histograms.png',
-              hasHistogram: true
-            },
-            'taco_play': {
-              video: './static/videos/samples_grid/taco_play/episode_grid.mp4',
-              histogram: './static/images/dataset_stats/taco_play/all_histograms.png',
-              hasHistogram: true
-            },
-            'toto': {
-              video: './static/videos/samples_grid/toto/episode_grid.mp4',
-              histogram: './static/images/dataset_stats/toto/all_histograms.png',
-              hasHistogram: true
-            },
-            'ucsd_kitchen': {
-              video: './static/videos/samples_grid/ucsd_kitchen/episode_grid.mp4',
-              histogram: './static/images/dataset_stats/ucsd_kitchen_dataset/all_histograms.png',
-              hasHistogram: true
-            },
-            'utaustin_mutex': {
-              video: './static/videos/samples_grid/utaustin_mutex/episode_grid.mp4',
-              histogram: './static/images/dataset_stats/utaustin_mutex/all_histograms.png',
-              hasHistogram: true
-            },
-            'utokyo_xarm_pick_and_place': {
-              video: './static/videos/samples_grid/utokyo_xarm_pick_and_place/episode_grid.mp4',
-              histogram: './static/images/dataset_stats/utokyo_xarm_pick_and_place/all_histograms.png',
-              hasHistogram: true
-            },
-            'viola': {
-              video: './static/videos/samples_grid/viola/episode_grid.mp4',
-              histogram: './static/images/dataset_stats/viola/all_histograms.png',
-              hasHistogram: true
-            }
-          };
-          
-          const dataset = datasets[selector.value];
-          
-          let html = `
-            <video id="dataset-video" autoplay muted loop playsinline width="100%" style="aspect-ratio: 16 / 9;" class="mb-4">
-              <source src="${dataset.video}" type="video/mp4">
-            </video>
-          `;
-          
-          if (dataset.hasHistogram) {
-            html += `
-              <img src="${dataset.histogram}" alt="${datasetName} Histograms" width="100%">
-            `;
-          } else {
-            html += `
-              <p class="has-text-grey-light is-italic">Histogram data not available</p>
-            `;
-          }
-          
-          content.innerHTML = html;
-          display.style.display = 'block';
-          
-          // Ensure autoplay starts on selection (user gesture)
-          const videoEl = document.getElementById('dataset-video');
-          if (videoEl && typeof videoEl.play === 'function') {
-            videoEl.play().catch(() => {
-              // If autoplay is blocked, leave it silent without showing title
-            });
-          }
-        }
-        </script>
-
+  
         
-      
-      </div>
-    </div>
-  </div>
-
-<section class="section is-small" id="results">
+<section class="section is-small" id="sim_results">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
-      <div class="column is-four-fifths is-centered">
-        <h2 class="title is-3 has-text-centered is-size-5-mobile">Results (content tbd)
+      <div class="column has-text-justified">
+        <h2 class="title is-1 has-text-centered">Scaling Robot Augmentation — A Systematic Study
         </h2>
 
+        <h2 class="subtitle">
+           We conduct a systematic simulation study to examine how robot augmentation scales in terms of <strong>transfer</strong>, <strong>generalization</strong>, and <strong>robustness</strong>. While prior work has shown that augmenting demonstrations from a source robot to a known target enables zero-shot transfer, our goal is to investigate <strong>whether robot augmentation provides broader benefits when scaled across multiple target robots</strong>
+         </h2>
 
-        <h3 class="title is-4 has-text-centered">Experimental Settings</h3>
-        <div class="content">
-          <p>We evaluate our augmentation method using the following experimental configurations:</p>
-          
-          <ul style="list-style: none; padding-left: 0;">
-            <li style="margin-bottom: 1rem;">
-              <strong>Source Only:</strong> Use only the original demonstrations from the source robot.
-            </li>
-            
-            <li style="margin-bottom: 1rem;">
-              <strong>Target Only:</strong> Use only the augmented demonstrations for the target robot (no source data).
-            </li>
-            
-            <li style="margin-bottom: 1rem;">
-              <strong>1+1 (Unseen):</strong> Combine original and augmented demos, where neither robot is the target robot.
-            </li>
-            
-            <li style="margin-bottom: 1rem;">
-              <strong>1+1 (Seen):</strong> Combine original and augmented demos, where the augmented robot is the target robot.
-            </li>
-            
-            <li style="margin-bottom: 1rem;">
-              <strong>N-1 (Leave-One-Out):</strong> Train on all robot demonstrations except the target robot.
-            </li>
-            
-            <li style="margin-bottom: 1rem;">
-              <strong>N (All Robots):</strong> Train on all robot demonstrations.
-            </li>
-          </ul>
-          
-          <div class="notification is-info">
-            <strong>Note:</strong> Only Target Only, 1+1 (Seen), and N configurations train on the target robot's data.
-          </div>
-        </div>
+         <br>
+         <h3 class="title is-4 has-text-centered">Generalization to Unseen Robots</h3>
+         <img src="./static/images/standard_combined_website.png" alt="Standard Combined" width="100%">
 
-        <h3 class="title is-4 has-text-centered">Simulation Results</h3>
-        <div class="content">
-          <img src="./static/images/sim_results_v2.png" alt="Simulation Results" width="100%">
-          <p>
-            Scaling the number of augmented robots seems to improve policy performance, especially with generalisation to unseen robots!
-          </p>
+         
+         <h2 class="subtitle">
+          We evaluate performance on robots that were not used for augmentation. 
+          Specifically, we compare three settings: training only on the source robot (<strong>“No Augmentation”</strong>),  augmenting demonstrations to a single additional robot that is not the target robot (<strong>“1 Augmented Robot”</strong>), 
+          and augmenting to all robots besides the held-out robot (<strong>“N–1 Augmented Robots”</strong>).
+        </h2>
+        
+        <h2 class="subtitle">All policies are evaluated on an unseen robot that is not part of the augmentation set. We see that the ``Source-Only'' policy performs poorly, as expected. ``1+1'' policies generalize moderately well to some robots, but ``N-1'' achieves substantially higher success across all four target robots. This suggests that robot augmentation promotes embodiment-agnostic visual representations and spatial reasoning, and generalization to unseen embodiments improves as we increase the diversity of robot augmentations.</h2>
+         
           <video autoplay muted loop playsinline width="100%" style="aspect-ratio: 16 / 9;">
             <source src="./static/videos/standard.m4v" type="video/mp4">
           </video>
-          <div class="content">
-            We also see improvements in robustness to visual disruptions. We tested two altered environments, changing lighting conditions and partially blocking the robot from view.
-          </div>
-          <img src="./static/images/Altered_results.png" alt="Altered Results" width="100%">
-          <p> Similar to previous performance gains, this robustness scales up as we include more robots in the training process.</p>
-          <p> Videos of altered environments:</p>
+        <p>TODO: Add more videos</p>
+
+        <h3 class="title is-4 has-text-centered">Robustness to Visual Perturbations</h3>
+        <h2 class="subtitle">
+          We also ask the question: "Can robot augmentation improve robustness on the original robot?" We evaluate on the original source robot under visual perturbations (lighting shifts and occlusions). Similar to above, we compare 3 policies: training only on the source robot ("Source-Only"), augmenting to another robot ("Source + Target (1+1)") and augmenting to N robots ("N").
+        </h2>
+        <img src="./static/images/altered_setting.png" alt="Altered Results" width="100%">
+        <h2 class="subtitle">
+          The figure shows performance under test-time perturbations to the source robot's environment: (1) lighting shifts that introduce shadows, and (2) occlusions from randomly placed black rectangles. While "Source-Only" policies degrade significantly, both "1+1" and "N" are more robust, with "N" consistently achieving the highest success. This suggests that robot augmentation enhances robustness even on the original embodiment by encouraging the policy to focus on task-relevant structure rather than incidental features such as arm texture or lighting cues.
+        </h2>
+
           <video autoplay muted loop playsinline width="100%" style="aspect-ratio: 16 / 9;">
             <source src="./static/videos/lighting.m4v" type="video/mp4">
           </video>
           <video autoplay muted loop playsinline width="100%" style="aspect-ratio: 16 / 9;">
             <source src="./static/videos/patch.m4v" type="video/mp4">
           </video>
+
+
         </div>
+  </section>
 
 
-        <h3 class="title is-4 has-text-centered">Real Results</h3>
-        <div class="content">
-          <p>We augment the Bridge dataset (originally WidowX) from OXE into Franka, UR5e, and Xarm7 embodiments, and finetune OpenVLA and π_0 policies.</p>
-        </div>
+  
+</section>
 
-        <div class="content">
+
+<section class="section is-small" id="real_results">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column has-text-justified">
+        <h2 class="title is-1 has-text-centered">Real Experiments
+        </h2>
+          <h3 class="subtitle">
+            In real experiments, we evaluate whether large-scale augmentation can also benefit pre-trained foundation models. We consider two state-of-the-art generalist policies—OpenVLA and $\pi_0$—and fine-tune them using OXE-Aug.
+          </h3>
+          <h2 class="subtitle">
+            For evaluation, we use tasks from the Bridge dataset, originally collected on a WidowX robot, and test on two embodiments:
+          
+            <ol>
+              <li>A Franka arm with its default parallel-jaw gripper ("Franka"), which corresponds to one of the augmented robots in OXE-Aug, and</li>
+              <li>A Franka arm with a custom modified Robotiq gripper ("Robotiq++"), which features colored pads to simulate an unseen embodiment.</li>
+            </ol>
+          </h2>
+          
+          <h2 class="subtitle">
+            We evaluate 4 manipulation tasks. For each base model, we compare "Source-Only," "Target-Only," and "N."
+          </h2>
+        
           <img src="./static/images/Real results.png" alt="Real Results" width="100%">
-          <p>
-            
-          </p>
+          <h2 class="subtitle">
+          Each policy is evaluated over 10 trials per task. Both OpenVLA-OFT and $\pi_0$'s performances are relatively low when fine-tuned only on the original Bridge data, especially on Franka, due to the visual domain shift from the black WidowX gripper to the white Franka one. Fine-tuning on OXE-Aug significantly improves cross-embodiment performance: "Target-Only" improves success across all tasks, and "N," which incorporates more diverse robot augmentations, yields the highest success overall. On average, "N" improves performance by 24% for OpenVLA-OFT and 45% for $\pi_0$. On the novel Robotiq++ embodiment, fine-tuned policies reach 75% (OpenVLA-OFT) and 82% ($\pi_0$) average success, demonstrating strong generalization.
+          </h2>
 
            <h4 class="title is-5">Task Videos:</h4>
            <p><strong>Croissant into pan</strong></p>
@@ -558,24 +487,28 @@
            <video autoplay muted loop playsinline width="100%" style="aspect-ratio: 16 / 9;">
              <source src="./static/videos/croissant.m4v" type="video/mp4">
            </video>
-           
-        </div>
-
-
-
-
-
-        
-      
       </div>
     </div>
-  </div>
+        </div>
 </section>
 
 
 
 
+<section class="section is-small" id="real_results">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths is-centered">
+        <h2 class="title is-3 has-text-centered is-size-5-mobile">Add your robot and your dataset!
+        </h2>
 
+        <p>
+          TODO: Add text here.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="section">
   <div class="container is-max-desktop">
@@ -604,8 +537,25 @@
 
 <section class="section is-small">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 is-size-4-mobile">BibTex</h2>
+    <h2 class="title is-3 is-size-4-mobile">License & Responsible Use</h2>
 
+    <div class="content">
+      <p>
+        <strong>Datasets:</strong> CC BY 4.0 (attribution required; state your modifications in derivatives).
+      </p>
+      <p>
+        <strong>Code:</strong> Apache-2.0 / MIT (match your repo choice).
+      </p>
+      <p>
+        <strong>Responsible Use:</strong> No personal data; research/robotics use; do not deploy in unlawful or harmful contexts.
+      </p>
+    </div>
+
+    </div>
+</section>
+    
+    <!-- BibTex --
+    <h2 class="title is-3 is-size-4-mobile">BibTex</h2>
     <br>
     <pre class="is-hidden-mobile"><code>@inproceedings{TODO,
 }</code></pre>
@@ -614,7 +564,7 @@
         If you have any questions, please contact <a href="https://yunliangchen.github.io/">Lawrence Chen</a>
       </p>
     </div>
-</section>
+
 
 
 
