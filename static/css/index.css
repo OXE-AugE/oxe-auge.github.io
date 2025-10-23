@@ -180,3 +180,74 @@ transition: opacity 1.0s;
   z-index: 2; /* Ensure text is above the overlay */
   transition: opacity 1.0s;
 }
+
+/* Dataset Grid Styling */
+.dataset-item {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.dataset-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.dataset-item .title {
+  color: #363636;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dataset-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.dataset-item:hover .dataset-video {
+  transform: scale(1.02);
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .dataset-item {
+    padding: 1rem;
+  }
+  
+  .video-wrapper {
+    height: 180px;
+  }
+  
+  .dataset-item .title {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .video-wrapper {
+    height: 160px;
+  }
+}
