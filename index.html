@@ -61,6 +61,7 @@
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+  <script src="./js/carousel.js"></script>
 </head>
 
 <section class="hero is-link is-fullheight video" style="overflow: hidden; position:relative;">
@@ -209,10 +210,8 @@
 
     </div>
   </div>
-</section>
 
 
-<section class="section" id="video">
   <div class="container is-max-desktop">
     <h2 class="title is-1 has-text-centered is-size-4-mobile">Technical Summary Video</h2>
     <iframe width="100%" style="aspect-ratio: 16 / 9;" src="TODO"
@@ -223,6 +222,7 @@
   </div>
 </section>
 
+
 <section class="section is-small" id="oxe-aug">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
@@ -232,16 +232,6 @@
         <h2 class="subtitle">
            OXE-Aug is designed to scale the benefits of robot augmentation by applying cross-painting to a broad range of tasks, scenes, and robot embodiments. The original OXE dataset is highly biased, the top 4 robots account for over 85% of the trajectories. We select 16 datasets from OXE that are commonly used in training robot foundation models. The original demonstrations in these datasets were collected using Franka, UR5, xArm, WidowX, Google Robot, and Jaco platforms. We augment each dataset with up to 9 different robots: the 6 aforementioned robots, as well as Sawyer, Kinova Gen3, and KUKA.
 
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section is-small">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column has-text-justified">
         <h2 class="subtitle">
           The full dataset in LeRobot format (~1TB) can be downloaded from Huggingface: <a href="https://huggingface.co/oxe-aug" target="_blank">https://huggingface.co/oxe-aug</a>. We also open-source our code for generating the dataset: <a href="https://github.com/GuanhuaJi/oxe-aug" target="_blank">https://github.com/GuanhuaJi/oxe-aug</a> which also provides an option for generating the data in RLDS format.
         </h2>
@@ -423,12 +413,47 @@
           The figure shows performance under test-time perturbations to the source robot's environment: (1) lighting shifts that introduce shadows, and (2) occlusions from randomly placed black rectangles. While "Source-Only" policies degrade significantly, both "1+1" and "N" are more robust, with "N" consistently achieving the highest success. This suggests that robot augmentation enhances robustness even on the original embodiment by encouraging the policy to focus on task-relevant structure rather than incidental features such as arm texture or lighting cues.
         </h2>
 
-          <video autoplay muted loop playsinline width="100%" style="aspect-ratio: 16 / 9;">
+          <h4 class="title is-5 has-text-centered">Robustness Demonstrations</h4>
+          
+          <!-- Robustness Videos Carousel -->
+          <div class="task-carousel robustness-videos-carousel" style="position: relative; margin: 30px 0; padding: 20px; background: #f8f8f8; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; min-height: 450px !important; width: 100%; max-height: none !important;">
+            <!-- Carousel slides container with transition styling -->
+            <div class="slides-container" style="position: relative; width: 100%; height: 100%; transition: transform 0.5s ease-in-out; min-height: 450px !important;">
+              
+              <!-- Slide 1: Lighting shifts -->
+              <div class="task-slide" style="position: absolute; width: 100%; transform: translateX(0); transition: transform 0.5s ease-in-out; padding-bottom: 80px; overflow: visible; min-height: 450px !important;">
+                <h4 style="text-align: center; font-size: 22px; margin-bottom: 25px;"><strong>Lighting Shifts</strong></h4>
+                <div style="margin: 0 auto 15px auto; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 90%;">
+                  <video width="100%" height="auto" autoplay muted loop playsinline controls style="display: block; border-radius: 8px; max-height: 350px; object-fit: contain;">
             <source src="./static/videos/lighting.m4v" type="video/mp4">
           </video>
-          <video autoplay muted loop playsinline width="100%" style="aspect-ratio: 16 / 9;">
+                </div>
+              </div>
+              
+              <!-- Slide 2: Occlusions -->
+              <div class="task-slide" style="position: absolute; width: 100%; transform: translateX(100%); transition: transform 0.5s ease-in-out; padding-bottom: 80px; overflow: visible; min-height: 450px !important;">
+                <h4 style="text-align: center; font-size: 22px; margin-bottom: 25px;"><strong>Occlusions</strong></h4>
+                <div style="margin: 0 auto 15px auto; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 90%;">
+                  <video width="100%" height="auto" autoplay muted loop playsinline controls style="display: block; border-radius: 8px; max-height: 350px; object-fit: contain;">
             <source src="./static/videos/patch.m4v" type="video/mp4">
           </video>
+                </div>
+              </div>
+       </div>
+
+            <!-- Navigation arrows -->
+            <button id="robustness-prev-slide" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.5); transition: all 0.3s; pointer-events: auto;">
+              &#10094;
+            </button>
+            <button id="robustness-next-slide" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.5); transition: all 0.3s; pointer-events: auto;">
+              &#10095;
+            </button>
+            
+            <!-- Slide indicators -->
+            <div class="robustness-slide-indicators" style="text-align: center; position: absolute; bottom: 15px; left: 0; right: 0; z-index: 100; background-color: rgba(0,0,0,0.5); padding: 8px; border-radius: 15px; width: 80px; margin: 0 auto;">
+              <span class="robustness-current-slide" style="font-weight: bold; color: white;">1</span> <span style="color: white;">/</span> <span class="robustness-total-slides" style="color: white;">2</span>
+            </div>
+        </div>
 
 
         </div>
@@ -466,30 +491,62 @@
           Each policy is evaluated over 10 trials per task. Both OpenVLA-OFT and $\pi_0$'s performances are relatively low when fine-tuned only on the original Bridge data, especially on Franka, due to the visual domain shift from the black WidowX gripper to the white Franka one. Fine-tuning on OXE-Aug significantly improves cross-embodiment performance: "Target-Only" improves success across all tasks, and "N," which incorporates more diverse robot augmentations, yields the highest success overall. On average, "N" improves performance by 24% for OpenVLA-OFT and 45% for $\pi_0$. On the novel Robotiq++ embodiment, fine-tuned policies reach 75% (OpenVLA-OFT) and 82% ($\pi_0$) average success, demonstrating strong generalization.
           </h2>
 
-           <h4 class="title is-5">Task Videos:</h4>
-           <p><strong>Croissant into pan</strong></p>
-           <video autoplay muted loop playsinline width="100%" style="aspect-ratio: 16 / 9;">
+            <h4 class="title is-5 has-text-centered">Task Videos</h4>
+            
+            <!-- Task Videos Carousel -->
+            <div class="task-carousel task-videos-carousel" style="position: relative; margin: 30px 0; padding: 20px; background: #f8f8f8; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; min-height: 450px !important; width: 100%; max-height: none !important;">
+              <!-- Carousel slides container with transition styling -->
+              <div class="slides-container" style="position: relative; width: 100%; height: 100%; transition: transform 0.5s ease-in-out; min-height: 450px !important;">
+                
+                <!-- Slide 1: Croissant into pan -->
+                <div class="task-slide" style="position: absolute; width: 100%; transform: translateX(0); transition: transform 0.5s ease-in-out; padding-bottom: 80px; overflow: visible; min-height: 450px !important;">
+                  <h4 style="text-align: center; font-size: 22px; margin-bottom: 25px;"><strong>Croissant into pan</strong></h4>
+                  <div style="margin: 0 auto 15px auto; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 90%;">
+                    <video width="100%" height="auto" autoplay muted loop playsinline controls style="display: block; border-radius: 8px; max-height: 350px; object-fit: contain;">
              <source src="./static/videos/croissant.m4v" type="video/mp4">
            </video>
-
-           <p><strong>Carrot on plate</strong></p>
-           <video autoplay muted loop playsinline width="100%" style="aspect-ratio: 16 / 9;">
-             <source src="./static/videos/croissant.m4v" type="video/mp4">
+                  </div>
+                </div>
+                
+                <!-- Slide 2: Carrot on plate -->
+                <div class="task-slide" style="position: absolute; width: 100%; transform: translateX(100%); transition: transform 0.5s ease-in-out; padding-bottom: 80px; overflow: visible; min-height: 450px !important;">
+                  <h4 style="text-align: center; font-size: 22px; margin-bottom: 25px;"><strong>Carrot on plate</strong></h4>
+                  <div style="margin: 0 auto 15px auto; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 90%;">
+                    <video width="100%" height="auto" autoplay muted loop playsinline controls style="display: block; border-radius: 8px; max-height: 350px; object-fit: contain;">
+                      <source src="./static/videos/carrot.m4v" type="video/mp4">
            </video>
-
-           <p><strong>Carrot on plate</strong></p>
-           <video autoplay muted loop playsinline width="100%" style="aspect-ratio: 16 / 9;">
-             <source src="./static/videos/croissant.m4v" type="video/mp4">
+                  </div>
+                </div>
+                
+                <!-- Slide 3: Cloth manipulation -->
+                <div class="task-slide" style="position: absolute; width: 100%; transform: translateX(100%); transition: transform 0.5s ease-in-out; padding-bottom: 80px; overflow: visible; min-height: 450px !important;">
+                  <h4 style="text-align: center; font-size: 22px; margin-bottom: 25px;"><strong>Cloth manipulation</strong></h4>
+                  <div style="margin: 0 auto 15px auto; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 90%;">
+                    <video width="100%" height="auto" autoplay muted loop playsinline controls style="display: block; border-radius: 8px; max-height: 350px; object-fit: contain;">
+                      <source src="./static/videos/cloth.m4v" type="video/mp4">
            </video>
+                  </div>
+                </div>
+         </div>
 
-
-           <p><strong>Toy tiger to the left of napkin</strong></p>
-           <video autoplay muted loop playsinline width="100%" style="aspect-ratio: 16 / 9;">
-             <source src="./static/videos/croissant.m4v" type="video/mp4">
-           </video>
+              <!-- Navigation arrows -->
+              <button id="task-prev-slide" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.5); transition: all 0.3s; pointer-events: auto;">
+                &#10094;
+              </button>
+              <button id="task-next-slide" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.8); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 2px 8px rgba(0,0,0,0.5); transition: all 0.3s; pointer-events: auto;">
+                &#10095;
+              </button>
+              
+              <!-- Slide indicators -->
+              <div class="task-slide-indicators" style="text-align: center; position: absolute; bottom: 15px; left: 0; right: 0; z-index: 100; background-color: rgba(0,0,0,0.5); padding: 8px; border-radius: 15px; width: 80px; margin: 0 auto;">
+                <span class="task-current-slide" style="font-weight: bold; color: white;">1</span> <span style="color: white;">/</span> <span class="task-total-slides" style="color: white;">3</span>
+              </div>
+        </div>
+        
+      
       </div>
     </div>
-        </div>
+  </div>
 </section>
 
 
