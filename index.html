@@ -53,6 +53,16 @@
     .section {
       background-color: #ffffff;
     }
+    
+    /* Fix positioning context for hero sections after carousels */
+    .hero.is-light.after-carousel {
+      position: relative;
+      clear: both;
+      z-index: 1;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
+    }
   </style>
 
   <script src="https://kit.fontawesome.com/19914a84eb.js" crossorigin="anonymous"></script>
@@ -235,7 +245,7 @@
 </section>
 
 
-<section class="hero is-light is-small">
+<section class="hero is-light is-small after-carousel">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
@@ -398,7 +408,7 @@
 </div>
   
 
-<section class="hero is-light is-small">
+<section class="hero is-light is-small after-carousel">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
@@ -494,7 +504,7 @@
   </section>
 
 
-<section class="hero is-light is-small">
+<section class="hero is-light is-small after-carousel">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
@@ -589,8 +599,6 @@
     </div>
   </div>
 </section>
-
-
 
 
 <section class="section is-small" id="real_results">
