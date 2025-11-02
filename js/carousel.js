@@ -203,6 +203,25 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Task videos carousel element not found!');
   }
 
+  // Initialize Generalization Videos Carousel
+  const generalizationCarouselElement = document.querySelector('.generalization-videos-carousel');
+  console.log('Generalization videos carousel element found:', generalizationCarouselElement);
+  
+  if (generalizationCarouselElement) {
+    console.log('Initializing generalization videos carousel...');
+    initializeCarousel({
+      slidesSelector: '.generalization-videos-carousel .task-slide',
+      prevButtonId: 'generalization-prev-slide',
+      nextButtonId: 'generalization-next-slide',
+      currentIndicatorSelector: '.generalization-current-slide',
+      totalIndicatorSelector: '.generalization-total-slides',
+      containerSelector: '.generalization-videos-carousel',
+      enableKeyboardNav: true
+    });
+  } else {
+    console.log('Generalization videos carousel element not found!');
+  }
+
   // Initialize Robustness Videos Carousel
   const robustnessCarouselElement = document.querySelector('.robustness-videos-carousel');
   console.log('Robustness videos carousel element found:', robustnessCarouselElement);
@@ -220,5 +239,24 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   } else {
     console.log('Robustness videos carousel element not found!');
+  }
+
+  // Initialize Robot Augmentation Videos Carousel
+  const robotAugmentationCarouselElement = document.querySelector('.robot-augmentation-carousel');
+  console.log('Robot augmentation videos carousel element found:', robotAugmentationCarouselElement);
+  
+  if (robotAugmentationCarouselElement) {
+    console.log('Initializing robot augmentation videos carousel...');
+    initializeCarousel({
+      slidesSelector: '.robot-augmentation-carousel .task-slide',
+      prevButtonId: 'robot-augmentation-prev-slide',
+      nextButtonId: 'robot-augmentation-next-slide',
+      currentIndicatorSelector: '.robot-augmentation-current-slide',
+      totalIndicatorSelector: '.robot-augmentation-total-slides',
+      containerSelector: '.robot-augmentation-carousel',
+      enableKeyboardNav: true
+    });
+  } else {
+    console.log('Robot augmentation videos carousel element not found!');
   }
 });
