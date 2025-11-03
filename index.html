@@ -465,9 +465,9 @@
             <h2 class="subtitle">
               We ask the question: <em>"Can robot augmentation improve robustness on the original robot?"</em> We
               evaluate on the original source robot under visual perturbations (lighting shifts and occlusions). Similar
-              to above, we compare three policies: <em><strong>0x Aug + Source</em></strong> (training only on the
-              source robot), <em><strong>1x Aug + Source</em></strong> (training on both the source robot and augmented
-              target robot) and <em><strong>Nx Aug + Source</em></strong> (augmenting to and training on all N robots
+              to above, we compare three policies: <strong>0x Aug + Source</strong> (training only on the
+              source robot), <strong>1x Aug + Source</strong> (training on both the source robot and augmented
+              target robot) and <strong>Nx Aug + Source</strong> (augmenting to and training on all N robots
               including the source robot).
             </h2>
 
@@ -476,9 +476,9 @@
             <h2 class="subtitle">
               The figure shows performance under test-time perturbations to the source robot's environment: (1) lighting
               shifts that introduce shadows, and (2) occlusions from randomly placed black rectangles. While
-              <em><strong>0x Aug + Source</em></strong> policies degrade significantly, both <em><strong>1x Aug +
-                  Source</em></strong> and <em><strong>Nx Aug + Source</em></strong> are more robust, with
-              <em><strong>Nx Aug + Source</em></strong> consistently achieving the highest success. This suggests that
+              <strong>0x Aug + Source</strong> policies degrade significantly, both <strong>1x Aug +
+                  Source</strong> and <strong>Nx Aug + Source</strong> are more robust, with
+              <strong>Nx Aug + Source</strong> consistently achieving the highest success. This suggests that
               robot augmentation enhances robustness even on the original embodiment by encouraging the policy to focus
               on task-relevant structure rather than incidental features such as arm texture or lighting cues.
             </h2>
@@ -547,16 +547,16 @@
 
             <h2 class="subtitle">
               We also evaluate performance on robots that were not used for augmentation.
-              Specifically, we compare three settings: <em><strong>No Augmentation</strong></em> (training only on the
-              source robot), <em><strong>1 Augmented Robot</strong></em> (augmenting to a single additional robot that
+              Specifically, we compare three settings: <strong>No Augmentation</strong></em> (training only on the
+              source robot), <strong>1 Augmented Robot</strong></em> (augmenting to a single additional robot that
               is not the target robot),
-              and <em><strong>N–1 Augmented Robots</strong></em> (augmenting to all robots besides the held-out robot).
+              and <strong>N–1 Augmented Robots</strong></em> (augmenting to all robots besides the held-out robot).
             </h2>
 
             <h2 class="subtitle">All policies are evaluated on an unseen robot that is not part of the augmentation set.
-              We see that the <em><strong>No Augmentation</strong></em> policy performs poorly, as expected.
-              <em><strong>1 Augmented Robot</strong></em> policies generalize moderately well to some robots, but
-              <em><strong>N–1 Augmented Robots</strong></em> achieves substantially higher success across all four
+              We see that the <strong>No Augmentation</strong></em> policy performs poorly, as expected.
+              <strong>1 Augmented Robot</strong></em> policies generalize moderately well to some robots, but
+              <strong>N–1 Augmented Robots</strong></em> achieves substantially higher success across all four
               target robots. This suggests that robot augmentation promotes embodiment-agnostic visual representations
               and spatial reasoning, and generalization to unseen embodiments improves as we increase the diversity of
               robot augmentations.</h2>
@@ -657,10 +657,10 @@
             </h2>
 
             <h2 class="subtitle">
-              We evaluate 4 manipulation tasks. For each base model, we compare <em><strong>No
-                  Augmentation</em></strong> (training on just the source WidowX robot), <em><strong>2 Augmented
-                  Robots</em></strong> (training on only Franka and UR5 augmentations) and <em><strong>N Augmented
-                  Robots</em></strong> (augmenting to and training on all N robots including the source robot).
+              We evaluate 4 manipulation tasks. For each base model, we compare <strong>No
+                  Augmentation</strong> (training on just the source WidowX robot), <strong>2 Augmented
+                  Robots</strong> (training on only Franka and UR5 augmentations) and <strong>N Augmented
+                  Robots</strong> (augmenting to and training on all N robots including the source robot).
             </h2>
 
             <img src="./static/images/Real results.png" alt="Real Results" width="100%">
@@ -668,10 +668,10 @@
               Each policy is evaluated over 10 trials per task. Both OpenVLA-OFT and $\pi_0$'s performances are
               relatively low when fine-tuned only on the original Bridge data, especially on Franka, due to the visual
               domain shift from the black WidowX gripper to the white Franka one. Fine-tuning on OXE-AugE significantly
-              improves cross-embodiment performance: <em><strong>2 Augmented Robots</em></strong> improves success
-              across all tasks, and <em><strong>N Augmented Robots</em></strong>, which incorporates more diverse robot
-              augmentations, yields the highest success overall. On average, <em><strong>N Augmented
-                  Robots</em></strong> improves performance by 24% for OpenVLA-OFT and 45% for $\pi_0$. On the novel
+              improves cross-embodiment performance: <strong>2 Augmented Robots</strong> improves success
+              across all tasks, and <strong>N Augmented Robots</strong>, which incorporates more diverse robot
+              augmentations, yields the highest success overall. On average, <strong>N Augmented
+                  Robots</strong> improves performance by 24% for OpenVLA-OFT and 45% for $\pi_0$. On the novel
               Robotiq++ embodiment, fine-tuned policies reach 75% (OpenVLA-OFT) and 82% ($\pi_0$) average success,
               demonstrating strong generalization.
             </h2>
